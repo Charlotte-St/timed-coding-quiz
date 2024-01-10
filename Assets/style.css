@@ -1,0 +1,14 @@
+body{
+    background-color: #f2f1ef;
+};
+
+h1{
+    color: #222222;
+    font-family: monospace;
+};
+
+button{
+    background-color: rebeccapurple;
+    border-radius: 4px;
+
+};
