@@ -8,7 +8,7 @@ var questions = [
     {
         question: "Which can be used to decrement a variable i by 1?",
         choices: ["i==", "i--", "i++", "--i"],
-        answer: 1
+        answer: "1"
     }
 ];
 
@@ -17,7 +17,7 @@ var highScores = {};
 
 //var timeCount;
 var quizTime = 30;
-
+var currentQuestion = 0;
 var score = 0;
 
 var timerEl = document.querySelector(".timer-count");
@@ -47,35 +47,63 @@ function startTimer() {
 
 function startQuiz() {
     startButtonEl.disabled = true;
+    //startButtonEl.remove();
     startTimer();
     renderQuestions();
+    console.log(`Current Question: ${currentQuestion}`);
+    console.log(`i value: ${i}`);
+    nextQuestion();
 };
 
+var i = 0; 
+
 function renderQuestions(){
-    var i = 0;
+    //var i = 0;
     quizEl.textContent = questions[i].question;
-        for (var j = 0; j < questions[0].choices.length; j++){
+        for (var j = 0; j < questions[i].choices.length; j++){
             var answerButton = document.createElement('button');
             answerButton.getAttribute("class", "answer-button");
              answerButton.innerText = questions[i].choices[j];
-             answerButton.classList.add(j);
+             answerButton.setAttribute("value", j);
+             //answerButton.setAttribute("id", "btn");
              quizEl.append(answerButton);
+             //console.log(questions[i].answer);
+            var userAnswer = '';
+            function checkAnswer(event){
+                userAnswer = event.target.value;
+                console.log(userAnswer);
+                if (userAnswer === questions[i].answer){
+                    quizEl.append("Correct!");
+                    score =+ 10;
+                    console.log(score);
+                    //i++;
+                }
+                else {
+                    quizEl.append("Incorrect.")
+                    quizTime = quizTime - 5; 
+                    //i++;
+                }
+            };
              answerButton.addEventListener("click", checkAnswer);
-             function checkAnswer(){
-                if (answerButton.classList.contains(questions[i].answer) == true){
-                  score += 10;
-                    i++;
-            }
-            }
+        }
     
-   }
-};
+   };
+
+   function nextQuestion(){
+    if (quizTime > 0 && (i > currentQuestion)){
+        for (i; i < questions.length; i++) {
+        currentQuestion++;
+        renderQuestions();
+        console.log(currentQuestion);
+        }
+    };
+   };
 
 startButtonEl.addEventListener("click", startQuiz);
 
 
 // Update score as user takes quiz
-//Add button click eventt to launch quiz
+//Add button click event to launch quiz
 //Add interface for entering high score + name
 // Reset score after saving score + name to high scores
 // Add link to access high scores saved in local storage
