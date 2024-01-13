@@ -15,31 +15,42 @@ var questions = [
 // Track scores
 var highScores = {};
 
-var timer;
-var timeCount;
+//var timeCount;
 var quizTime = 30;
 
 var score = 0;
 
 var timerEl = document.querySelector(".timer-count");
 var quizEl = document.querySelector(".quiz-text");
+var startButtonEl = document.querySelector("#startbutton");
 
 //Add timer 
-function startTimer(){
-    timer = setInterval(function(){
+function startTimer() {
+    var timer = setInterval(function(){
         quizTime--;
         timerEl.textContent = quizTime;
-        if (timerCount === 0){
+
+        if (quizTime === 0){
             clearInterval(timer);
         }
     }, 1000)
 };
 
-startTimer();
 
 //Add quiz
  quizEl.textContent = "Click the button to start the quiz!";
 
+function startQuiz() {
+    startButtonEl.disabled = true;
+    startTimer();
+    renderQuestions();
+};
+
+function renderQuestions(){
+    quizEl.textContent = questions[0].question;
+};
+
+startButtonEl.addEventListener("click", startQuiz);
 // Update score as user takes quiz
 //Add button click eventt to launch quiz
 //Add interface for entering high score + name
