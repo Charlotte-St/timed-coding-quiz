@@ -3,12 +3,12 @@ var questions = [
     {
         question: "What type of object can be stored in local storage?",
         choices: ["a number", "a boolean", "a string", "a variable"],
-        answer: 3
+        answer: "2"
     },
     {
         question: "Which can be used to decrement a variable i by 1?",
         choices: ["i==", "i--", "i++", "--i"],
-        answer: 2
+        answer: 1
     }
 ];
 
@@ -23,6 +23,10 @@ var score = 0;
 var timerEl = document.querySelector(".timer-count");
 var quizEl = document.querySelector(".quiz-text");
 var startButtonEl = document.querySelector("#startbutton");
+var scoreEl = document.querySelector(".score");
+
+
+//Add init()
 
 //Add timer 
 function startTimer() {
@@ -38,6 +42,7 @@ function startTimer() {
 
 
 //Add quiz
+ scoreEl.textContent = score;
  quizEl.textContent = "Click the button to start the quiz!";
 
 function startQuiz() {
@@ -47,10 +52,28 @@ function startQuiz() {
 };
 
 function renderQuestions(){
-    quizEl.textContent = questions[0].question;
+    var i = 0;
+    quizEl.textContent = questions[i].question;
+        for (var j = 0; j < questions[0].choices.length; j++){
+            var answerButton = document.createElement('button');
+            answerButton.getAttribute("class", "answer-button");
+             answerButton.innerText = questions[i].choices[j];
+             answerButton.classList.add(j);
+             quizEl.append(answerButton);
+             answerButton.addEventListener("click", checkAnswer);
+             function checkAnswer(){
+                if (answerButton.classList.contains(questions[i].answer) == true){
+                  score += 10;
+                    i++;
+            }
+            }
+    
+   }
 };
 
 startButtonEl.addEventListener("click", startQuiz);
+
+
 // Update score as user takes quiz
 //Add button click eventt to launch quiz
 //Add interface for entering high score + name
