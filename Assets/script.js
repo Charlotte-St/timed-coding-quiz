@@ -11,13 +11,35 @@ var questions = [
         answer: 2
     }
 ];
+
+// Track scores
 var highScores = {};
-var timeCount = 10;
+
+var timer;
+var timeCount;
+var quizTime = 30;
+
 var score = 0;
 
+var timerEl = document.querySelector(".timer-count");
+var quizEl = document.querySelector(".quiz-text");
 
 //Add timer 
+function startTimer(){
+    timer = setInterval(function(){
+        quizTime--;
+        timerEl.textContent = quizTime;
+        if (timerCount === 0){
+            clearInterval(timer);
+        }
+    }, 1000)
+};
+
+startTimer();
+
 //Add quiz
+ quizEl.textContent = "Click the button to start the quiz!";
+
 // Update score as user takes quiz
 //Add button click eventt to launch quiz
 //Add interface for entering high score + name
