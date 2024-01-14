@@ -179,7 +179,25 @@ function listHighScores(event){
     quizEl.style.visibility = "hidden";
     startButtonEl.style.visibility = "hidden";
     highScoreList.style.visibility = "visible";
-
+    var scoreHistory = JSON.parse(localStorage.getItem("scoreRecord"));
+    console.log(scoreHistory);
+    console.log(scoreHistory.initials);
+    console.log(scoreHistory.score);
+    var scoreListItem = document.createElement("b");
+    scoreListItem.innerHTML = scoreHistory.initials + ": " + scoreHistory.score;
+    highScoreList.append(scoreListItem);
+    //if (scoreHistory !== null){
+    //for (var k = 0; k < scoreHistory.length; k++){
+        //highScoreList.textContent = scoreHistory[k].initials + ": " + scoreHistory[k].score;
+        //console.log(scoreHistory[k].initials + ": " + scoreHistory[k].score)
+        //}
+    //}
+    for (let key in scoreHistory) {
+        if (scoreHistory.hasOwnProperty(key)) {
+            value = scoreHistory[key];
+            console.log(key,value);
+        }
+    }
 };
 
 //Starts the quiz
