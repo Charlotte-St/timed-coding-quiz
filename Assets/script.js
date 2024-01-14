@@ -9,6 +9,16 @@ var questions = [
         question: "Which can be used to decrement a variable i by 1?",
         choices: ["i==", "i--", "i++", "--i"],
         answer: "1"
+    },
+    {
+        question: "What is the semantic tag used to indicate the location of site navigation?",
+        choices: ["link", "links", "navbar", "nav"],
+        answer: "3"
+    },
+    {
+        question: "What is the first index number of an array?",
+        choices: ["0", "1", "a", "-1"],
+        answer: "0"
     }
 ];
 
@@ -68,40 +78,11 @@ function renderQuestions(){
             answerButton.getAttribute("class", "answer-button");
              answerButton.innerText = questions[i].choices[j];
              answerButton.setAttribute("value", j);
-             //answerButton.setAttribute("id", "btn");
              quizEl.append(answerButton);
-             //console.log(questions[i].answer);
             var userAnswer = '';
-            //checkAnswer();
-            //function checkAnswer(event){
-                //userAnswer = event.target.value;
-                //console.log(userAnswer);
-                //if (userAnswer === questions[i].answer){
-                    //quizEl.append("Correct!");
-                    //score =+ 10;
-                    //console.log(score);
-                    //i++;
-                //}
-                //else {
-                    //quizEl.append("Incorrect.")
-                    //quizTime = quizTime - 5; 
-                    //i++;
-                //}
-            //};
              answerButton.addEventListener("click", checkAnswer);
-             answerButton.addEventListener("click",nextQuestion)
-             //if (userAnswer != ''){
-                //setTimeout( function(){
-                    //currentQuestion++;
-                    //if (currentQuestion < questions.length){
-                    //renderQuestions();
-                    //}
-                    //else{
-                        //quizEl.append = "Quiz over."
-                    //}
-                //}, 2000)
+             answerButton.addEventListener("click", nextQuestion)
              };
-             //answerButton.addEventListener;
         };
     
    //};
@@ -126,9 +107,9 @@ function checkAnswer(event){
 function nextQuestion() {
     currentQuestion++;
     if (quizTime > 0 && currentQuestion < questions.length){
-        renderQuestions()
+        setTimeout(renderQuestions, 3000)
     }
-    else{
+    else {
         quizEl.append = "Game Over. Score: " + score ;
     };
 };
