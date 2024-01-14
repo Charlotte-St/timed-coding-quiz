@@ -34,7 +34,7 @@ var timerEl = document.querySelector(".timer-count");
 var quizEl = document.querySelector(".quiz-text");
 var startButtonEl = document.querySelector("#startbutton");
 var scoreEl = document.querySelector(".score");
-
+var overEl = document.querySelector(".quiz-over");
 
 //Add init()
 
@@ -44,8 +44,9 @@ function startTimer() {
         quizTime--;
         timerEl.textContent = quizTime;
 
-        if (quizTime === 0){
+        if (quizTime === 0 || quizTime < 0 || i === questions.length){
             clearInterval(timer);
+            endQuiz();
         }
     }, 1000)
 };
@@ -64,7 +65,7 @@ function startQuiz() {
     renderQuestions();
     console.log(`Current Question: ${currentQuestion}`);
     console.log(`i value: ${i}`);
-    //nextQuestion();
+    //endQuiz();
 };
 
 var i = 0; 
@@ -93,27 +94,33 @@ function checkAnswer(event){
     console.log(userAnswer);
     if (userAnswer === questions[i].answer){
         quizEl.append("Correct!");
-        score =+ 10;
+        score = score + 10;
+        scoreEl.textContent = score;
         console.log(score);
         i++;
     }
     else {
         quizEl.append("Incorrect.")
         quizTime = quizTime - 5; 
-        i++;
+        //i++;
     }
 };
 
 function nextQuestion() {
     currentQuestion++;
-    if (quizTime > 0 && currentQuestion < questions.length){
+    if (quizTime > 0 && i < questions.length + 1){
         setTimeout(renderQuestions, 3000)
     }
     else {
-        quizEl.append = "Game Over. Score: " + score ;
+       overEl.textContent = "Quiz Complete";
     };
 };
 
+function endQuiz() {
+    //clearInterval(quizTime);
+    quizEl.innerHTML = "";
+};
+//};
 
 startButtonEl.addEventListener("click", startQuiz);
 
