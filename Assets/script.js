@@ -117,8 +117,23 @@ function nextQuestion() {
 };
 
 function endQuiz() {
-    //clearInterval(quizTime);
     quizEl.innerHTML = "";
+    quizEl.textContent = "Quiz Complete. Enter your initials and save your score."
+    var initials = document.createElement("input");
+    quizEl.append(initials);
+    var saveScore = document.createElement("button");
+    saveScore.innerText = "Save Score";
+    quizEl.append(saveScore);
+    saveScore.addEventListener("click", function(event){
+        event.preventDefault();
+        var scoreRecord = {
+            initials: initials.value.trim(),
+            score: score
+        };
+    
+    localStorage.setItem("scoreRecord", JSON.stringify(scoreRecord));
+    });
+
 };
 //};
 
