@@ -23,7 +23,7 @@ var questions = [
 ];
 
 // Track scores
-var highScores = {};
+//var highScores = {};
 
 //var timeCount;
 var quizTime = 30;
@@ -35,6 +35,10 @@ var quizEl = document.querySelector(".quiz-text");
 var startButtonEl = document.querySelector("#startbutton");
 var scoreEl = document.querySelector(".score");
 var overEl = document.querySelector(".quiz-over");
+
+
+// Set styling for elements added through DOM
+//quizEl.setAttribute("style", "border-width: 2px; max-width: 50%; display: flex;")
 
 //Add init()
 
@@ -53,11 +57,12 @@ function startTimer() {
 
 
 //Add quiz
- scoreEl.textContent = score;
+ scoreEl.textContent = "Score: " + score;
  quizEl.textContent = "Click the button to start the quiz!";
 
 function startQuiz() {
     startButtonEl.disabled = true;
+    startButtonEl.style.display = "none";
     currentQuestion = 0;
     score = 0;
     //startButtonEl.remove();
@@ -73,13 +78,16 @@ var i = 0;
 function renderQuestions(){
     //var i = 0;
     //resetQuestion();
+    startButtonEl.style.dislay = "none";
     quizEl.textContent = questions[i].question;
         for (var j = 0; j < questions[i].choices.length; j++){
             var answerButton = document.createElement('button');
             answerButton.getAttribute("class", "answer-button");
              answerButton.innerText = questions[i].choices[j];
              answerButton.setAttribute("value", j);
+             answerButton.classList.add("button");
              quizEl.append(answerButton);
+             answerButton.style.display = "block";
             var userAnswer = '';
              answerButton.addEventListener("click", checkAnswer);
              answerButton.addEventListener("click", nextQuestion)
@@ -102,7 +110,7 @@ function checkAnswer(event){
     else {
         quizEl.append("Incorrect.")
         quizTime = quizTime - 5; 
-        //i++;
+        i++;
     }
 };
 
@@ -118,10 +126,11 @@ function nextQuestion() {
 
 function endQuiz() {
     quizEl.innerHTML = "";
-    quizEl.textContent = "Quiz Complete. Enter your initials and save your score."
+    quizEl.innerHTML = "<h2>Quiz Complete.</h2></br> Enter your initials and save your score.</br></br>";
     var initials = document.createElement("input");
     quizEl.append(initials);
     var saveScore = document.createElement("button");
+    saveScore.classList.add("button");
     saveScore.innerText = "Save Score";
     quizEl.append(saveScore);
     saveScore.addEventListener("click", function(event){
@@ -133,9 +142,21 @@ function endQuiz() {
     
     localStorage.setItem("scoreRecord", JSON.stringify(scoreRecord));
     });
-
+    var resetButton = document.createElement("button");
+    resetButton.classList.add("button");
+    resetButton.innerText = "Reset the quiz and play again";
+    quizEl.append(resetButton);
+    resetButton.addEventListener("click", resetQuiz);
 };
 //};
+
+function resetQuiz() {
+    quizTime = 30;
+    i = 0;
+    score = 0; 
+    currentQuestion = 0;
+    startQuiz();
+};
 
 startButtonEl.addEventListener("click", startQuiz);
 

@@ -3,25 +3,29 @@
 <html lang="en-us">
     <head>
         <meta charset="UTF-8">
-        <title>Coding Quiz</title>
         <link rel="stylesheet" href="Assets/normalize.css">
         <link rel="stylesheet" href="Assets/style.css">
+        <title>Coding Quiz</title>
     </head>
     <body>
-        <header><h1>Coding Quiz</h1></header>
+        <header><h1>Coding Quiz</h1>
+        </header>
         <div id="timer">
             <div class="timer-count">30</div>
             <em>seconds remaining</em>
         </div>
         <div class="score"></div>
         <nav>
-            <div id="high-scores"></div>
+            <div id="high-scores">
+                <button id="view-scores" class="button">View High Scores</button>
+            </div>
         </nav>
         <main>
             <section>
                 <div class="quiz-text"></div>
+                <div class="quiz-over"></div>
                 <div class="answer-buttons"></div>
-            <div id="quiz"><button type="button" id="startbutton">Begin Quiz!</button></div>
+            <div id="quiz"><button class="button" id="startbutton">Begin Quiz!</button></div>
             </section>
         </main>
         <script src="Assets/script.js"></script>

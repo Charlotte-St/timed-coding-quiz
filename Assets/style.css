@@ -1,14 +1,27 @@
-body{
-    background-color: #f2f1ef;
-};
+body {
+    background-color: rgb(228, 228, 228);
+    margin: 5%;
+    color:darkslateblue;
+    justify-content: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
 
-h1{
-    color: #222222;
-    font-family: monospace;
-};
+header {
+    text-align: center;
+}
 
-button{
-    background-color: rebeccapurple;
-    border-radius: 4px;
+.button {
+    background-color: darkslateblue;
+    color:whitesmoke;
+    margin-top: .5rem;
+    display: block;
+}
 
-};
+main {
+    max-width: 50%;
+    justify-content: center;
+}
+
+div {
+    margin-top: 1rem;
+}
