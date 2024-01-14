@@ -22,10 +22,7 @@ var questions = [
     }
 ];
 
-// Track scores
-//var highScores = {};
-
-//var timeCount;
+//Global variables and DOM elements
 var quizTime = 30;
 var currentQuestion = 0;
 var score = 0;
@@ -35,14 +32,17 @@ var quizEl = document.querySelector(".quiz-text");
 var startButtonEl = document.querySelector("#startbutton");
 var scoreEl = document.querySelector(".score");
 var overEl = document.querySelector(".quiz-over");
+var scoresButtonEl = document.querySelector(".view-scores");
+var scoresEl = document.querySelector(".high-scores");
+var highScoreList = document.querySelector(".high-score-list");
 
+//init()
 
-// Set styling for elements added through DOM
-//quizEl.setAttribute("style", "border-width: 2px; max-width: 50%; display: flex;")
+function init(){
+    highScoreList.style.visibility = "hidden";
+}
 
-//Add init()
-
-//Add timer 
+//Quiz timer
 function startTimer() {
     var timer = setInterval(function(){
         quizTime--;
@@ -57,24 +57,28 @@ function startTimer() {
 
 
 //Add quiz
- scoreEl.textContent = "Score: " + score;
+ scoreEl.textContent = score;
  quizEl.textContent = "Click the button to start the quiz!";
 
+// Starts the quiz and hides the start button
 function startQuiz() {
     startButtonEl.disabled = true;
     startButtonEl.style.display = "none";
+    quizEl.style.visibility = "visible";
     currentQuestion = 0;
     score = 0;
     //startButtonEl.remove();
     startTimer();
     renderQuestions();
-    console.log(`Current Question: ${currentQuestion}`);
-    console.log(`i value: ${i}`);
+   //console.log(`Current Question: ${currentQuestion}`);
+    //console.log(`i value: ${i}`);
     //endQuiz();
 };
 
 var i = 0; 
 
+
+//Displays the questions and answer choices
 function renderQuestions(){
     //var i = 0;
     //resetQuestion();
@@ -96,7 +100,7 @@ function renderQuestions(){
     
    //};
 
-
+//Checks answers when the user clicks an answer button
 function checkAnswer(event){
     userAnswer = event.target.value;
     console.log(userAnswer);
@@ -104,7 +108,7 @@ function checkAnswer(event){
         quizEl.append("Correct!");
         score = score + 10;
         scoreEl.textContent = score;
-        console.log(score);
+        //console.log(score);
         i++;
     }
     else {
@@ -114,16 +118,18 @@ function checkAnswer(event){
     }
 };
 
+//Advances the quiz to the next question after 3 sec if there is remaining time or questions 
 function nextQuestion() {
     currentQuestion++;
     if (quizTime > 0 && i < questions.length + 1){
         setTimeout(renderQuestions, 3000)
     }
-    else {
-       overEl.textContent = "Quiz Complete";
-    };
+   // else {
+     //  overEl.textContent = "Quiz Complete";
+    //};
 };
 
+//Shows the quiz complete information and allows the user to save their high score and initials to local storage
 function endQuiz() {
     quizEl.innerHTML = "";
     quizEl.innerHTML = "<h2>Quiz Complete.</h2></br> Enter your initials and save your score.</br></br>";
@@ -150,6 +156,7 @@ function endQuiz() {
 };
 //};
 
+// Resets the quiz so the user can take the quiz again
 function resetQuiz() {
     quizTime = 30;
     i = 0;
@@ -158,6 +165,26 @@ function resetQuiz() {
     startQuiz();
 };
 
+//displays the high scores
+//function showHighScores(){
+    //if (quizTime === 0 || quizTime === 30 || i === questions.length + 1){
+    //scoresButtonEl.disabled = false;
+    //scoresButtonEl.addEventListener("click", listHighScores)}
+    //else {
+        //scoresButtonEl.disabled = true;
+    //}
+//};
+
+function listHighScores(event){
+    quizEl.style.visibility = "hidden";
+    startButtonEl.style.visibility = "hidden";
+    highScoreList.style.visibility = "visible";
+
+};
+
+//Starts the quiz
+init();
+scoresButtonEl.addEventListener("click", listHighScores);
 startButtonEl.addEventListener("click", startQuiz);
 
 

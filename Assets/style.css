@@ -14,7 +14,11 @@ header {
     background-color: darkslateblue;
     color:whitesmoke;
     margin-top: .5rem;
+    padding: 10px;
     display: block;
+    box-shadow: none;
+    border-width: 0px;
+    border-radius: 20px;
 }
 
 main {
@@ -24,4 +28,11 @@ main {
 
 div {
     margin-top: 1rem;
+}
+
+#controls {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
