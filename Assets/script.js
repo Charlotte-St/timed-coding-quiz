@@ -49,7 +49,7 @@ function init(){
 }
 
 function storeScores () {
-    localStorage.setItem("score", JSON.stringify(scores));
+    localStorage.setItem("scores", JSON.stringify(scores));
 }
 
 //Quiz timer
@@ -65,8 +65,7 @@ function startTimer() {
     }, 1000)
 };
 
-
-//Add quiz
+// Basic text content
  scoreEl.textContent = score;
  quizEl.textContent = "Click the button to start the quiz!";
 
@@ -74,15 +73,12 @@ function startTimer() {
 function startQuiz() {
     startButtonEl.disabled = true;
     startButtonEl.style.display = "none";
+    highScoreList.visibility = "hidden";
     quizEl.style.visibility = "visible";
     currentQuestion = 0;
     score = 0;
-    //startButtonEl.remove();
     startTimer();
     renderQuestions();
-   //console.log(`Current Question: ${currentQuestion}`);
-    //console.log(`i value: ${i}`);
-    //endQuiz();
 };
 
 var i = 0; 
@@ -90,8 +86,6 @@ var i = 0;
 
 //Displays the questions and answer choices
 function renderQuestions(){
-    //var i = 0;
-    //resetQuestion();
     startButtonEl.style.dislay = "none";
     quizEl.textContent = questions[i].question;
         for (var j = 0; j < questions[i].choices.length; j++){
@@ -108,7 +102,6 @@ function renderQuestions(){
              };
         };
     
-   //};
 
 //Checks answers when the user clicks an answer button
 function checkAnswer(event){
@@ -118,7 +111,6 @@ function checkAnswer(event){
         quizEl.append("Correct!");
         score = score + 10;
         scoreEl.textContent = score;
-        //console.log(score);
         i++;
     }
     else {
@@ -134,9 +126,6 @@ function nextQuestion() {
     if (quizTime > 0 && i < questions.length + 1){
         setTimeout(renderQuestions, 3000)
     }
-   // else {
-     //  overEl.textContent = "Quiz Complete";
-    //};
 };
 
 //Shows the quiz complete information and allows the user to save their high score and initials to local storage
@@ -151,15 +140,9 @@ function endQuiz() {
     quizEl.append(saveScore);
     saveScore.addEventListener("click", function(event){
         event.preventDefault();
-        //var items = JSON.parse(localStorage.getItem(scoreRecord)) || [];
-       // var scoreRecord = {
-            //initials: initials.value.trim(),
-            //score: score
-        //};
         var scoreRecord = initials.value.trim() + ": " + score;
         scores.push(scoreRecord);
         storeScores();
-    //localStorage.setItem("scoreRecord", JSON.stringify(items));
     });
     var resetButton = document.createElement("button");
     resetButton.classList.add("button");
@@ -167,7 +150,6 @@ function endQuiz() {
     quizEl.append(resetButton);
     resetButton.addEventListener("click", resetQuiz);
 };
-//};
 
 // Resets the quiz so the user can take the quiz again
 function resetQuiz() {
@@ -178,60 +160,42 @@ function resetQuiz() {
     startQuiz();
 };
 
-//displays the high scores
-//function showHighScores(){
-    //if (quizTime === 0 || quizTime === 30 || i === questions.length + 1){
-    //scoresButtonEl.disabled = false;
-    //scoresButtonEl.addEventListener("click", listHighScores)}
-    //else {
-        //scoresButtonEl.disabled = true;
-    //}
-//};
-
 function listHighScores(event){
     quizEl.style.visibility = "hidden";
     startButtonEl.style.visibility = "hidden";
     highScoreList.style.visibility = "visible";
-    //var scoreHistory = JSON.parse(localStorage.getItem("scoreRecord"));
-    //console.log(scoreHistory);
-    //console.log(scoreHistory.initials);
-    //console.log(scoreHistory.score);
-    //var scoreListItem = document.createElement("b");
-    //scoreListItem.innerHTML = scoreHistory.initials + ": " + scoreHistory.score;
-    //highScoreList.append(scoreListItem);
-    //if (scoreHistory !== null){
-    //for (var k = 0; k < scoreHistory.length; k++){
-        //highScoreList.textContent = scoreHistory[k].initials + ": " + scoreHistory[k].score;
-        //console.log(scoreHistory[k].initials + ": " + scoreHistory[k].score)
-        //}
-    //}
-    //for (let key in scoreHistory) {
-        //if (scoreHistory.hasOwnProperty(key)) {
-            //value = scoreHistory[key];
-            //console.log(key,value);
-        //}
-    //}
+    scoresButtonEl.disabled = true;
     for (var k = 0; k < scores.length; k++){
         var scoreItem = scores[k];
         var highScore = document.createElement("li");
         highScore.textContent = scoreItem;
         highScore.setAttribute("data-index", k);
         highScoreList.append(highScore);
-        //console.log(scores[k]);
-        //console.log(scoreItem);
+        console.log(scores[k]);
+        console.log(scoreItem);
     }
+    var returnToQuizButton = document.createElement("button");
+    returnToQuizButton.classList.add("button");
+    returnToQuizButton.textContent = "Dismiss high scores & take quiz again";
+    highScoreList.append(returnToQuizButton);
+    returnToQuizButton("click", startQuiz);
+    var clearScoreButton = document.createElement("button");
+    clearScoreButton.classList.add("button");
+    clearScoreButton.textContent = "Clear scores";
+    highScoreList.append(clearScoreButton);
+    clearScoreButton.addEventListener("click", clearScoreList)
 };
 
-//Starts the quiz
+function clearScoreList(event) {
+    scores = [];
+    localStorage.setItem("scores", JSON.stringify(scores));
+}
+
+//Initial page state
 init();
 scoresButtonEl.addEventListener("click", listHighScores);
 startButtonEl.addEventListener("click", startQuiz);
 
 
-// Update score as user takes quiz
-//Add button click event to launch quiz
-//Add interface for entering high score + name
-// Reset score after saving score + name to high scores
-// Add link to access high scores saved in local storage
 // Sort scores so highest score appears at the top
 // Add link to reset high scores
