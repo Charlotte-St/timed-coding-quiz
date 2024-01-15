@@ -26,6 +26,7 @@ var questions = [
 var quizTime = 30;
 var currentQuestion = 0;
 var score = 0;
+var scores = [];
 
 var timerEl = document.querySelector(".timer-count");
 var quizEl = document.querySelector(".quiz-text");
@@ -40,6 +41,15 @@ var highScoreList = document.querySelector(".high-score-list");
 
 function init(){
     highScoreList.style.visibility = "hidden";
+    var storedScores = JSON.parse(localStorage.getItem("scores"));
+
+    if (storedScores !== null){
+        scores = storedScores;
+    }
+}
+
+function storeScores () {
+    localStorage.setItem("score", JSON.stringify(scores));
 }
 
 //Quiz timer
@@ -141,12 +151,15 @@ function endQuiz() {
     quizEl.append(saveScore);
     saveScore.addEventListener("click", function(event){
         event.preventDefault();
-        var scoreRecord = {
-            initials: initials.value.trim(),
-            score: score
-        };
-    
-    localStorage.setItem("scoreRecord", JSON.stringify(scoreRecord));
+        //var items = JSON.parse(localStorage.getItem(scoreRecord)) || [];
+       // var scoreRecord = {
+            //initials: initials.value.trim(),
+            //score: score
+        //};
+        var scoreRecord = initials.value.trim() + ": " + score;
+        scores.push(scoreRecord);
+        storeScores();
+    //localStorage.setItem("scoreRecord", JSON.stringify(items));
     });
     var resetButton = document.createElement("button");
     resetButton.classList.add("button");
@@ -179,24 +192,33 @@ function listHighScores(event){
     quizEl.style.visibility = "hidden";
     startButtonEl.style.visibility = "hidden";
     highScoreList.style.visibility = "visible";
-    var scoreHistory = JSON.parse(localStorage.getItem("scoreRecord"));
-    console.log(scoreHistory);
-    console.log(scoreHistory.initials);
-    console.log(scoreHistory.score);
-    var scoreListItem = document.createElement("b");
-    scoreListItem.innerHTML = scoreHistory.initials + ": " + scoreHistory.score;
-    highScoreList.append(scoreListItem);
+    //var scoreHistory = JSON.parse(localStorage.getItem("scoreRecord"));
+    //console.log(scoreHistory);
+    //console.log(scoreHistory.initials);
+    //console.log(scoreHistory.score);
+    //var scoreListItem = document.createElement("b");
+    //scoreListItem.innerHTML = scoreHistory.initials + ": " + scoreHistory.score;
+    //highScoreList.append(scoreListItem);
     //if (scoreHistory !== null){
     //for (var k = 0; k < scoreHistory.length; k++){
         //highScoreList.textContent = scoreHistory[k].initials + ": " + scoreHistory[k].score;
         //console.log(scoreHistory[k].initials + ": " + scoreHistory[k].score)
         //}
     //}
-    for (let key in scoreHistory) {
-        if (scoreHistory.hasOwnProperty(key)) {
-            value = scoreHistory[key];
-            console.log(key,value);
-        }
+    //for (let key in scoreHistory) {
+        //if (scoreHistory.hasOwnProperty(key)) {
+            //value = scoreHistory[key];
+            //console.log(key,value);
+        //}
+    //}
+    for (var k = 0; k < scores.length; k++){
+        var scoreItem = scores[k];
+        var highScore = document.createElement("li");
+        highScore.textContent = scoreItem;
+        highScore.setAttribute("data-index", k);
+        highScoreList.append(highScore);
+        //console.log(scores[k]);
+        //console.log(scoreItem);
     }
 };
 
