@@ -10,16 +10,7 @@ header {
     text-align: center;
 }
 
-.button {
-    background-color: darkslateblue;
-    color:whitesmoke;
-    margin-top: .5rem;
-    padding: 10px;
-    display: block;
-    box-shadow: none;
-    border-width: 0px;
-    border-radius: 20px;
-}
+/* Layout */
 
 main {
     max-width: 50%;
@@ -35,4 +26,26 @@ div {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
+}
+
+.high-scores, .timer, .score-box{
+    width: 30%;
+}
+
+/* Button styles */
+.button {
+    background-color: darkslateblue;
+    color:whitesmoke;
+    margin-top: .5rem;
+    padding: 10px;
+    display: block;
+    box-shadow: none;
+    border-width: 0px;
+    border-radius: 20px;
+    text-wrap: wrap;
+}
+
+.button:hover {
+    background-color: white;
+    color: darkslateblue;
 }

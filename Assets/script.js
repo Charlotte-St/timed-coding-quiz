@@ -19,6 +19,11 @@ var questions = [
         question: "What is the first index number of an array?",
         choices: ["0", "1", "a", "-1"],
         answer: "0"
+    },
+    {
+        question: "Which of these is not a possible value of flexwrap?",
+        choices: ["wrap", "nowrap", "reverse-wrap", "wrap-reverse"],
+        answer: "2"
     }
 ];
 
@@ -35,6 +40,7 @@ var scoreEl = document.querySelector(".score");
 var overEl = document.querySelector(".quiz-over");
 var scoresButtonEl = document.querySelector(".view-scores");
 var scoresEl = document.querySelector(".high-scores");
+var highScoreHeaderEl = document.querySelector(".high-score-header");
 var highScoreList = document.querySelector(".high-score-list");
 var clearScoreButton = document.createElement("button");
 var returnToQuizButton = document.createElement("button");
@@ -43,6 +49,7 @@ var returnToQuizButton = document.createElement("button");
 
 function init(){
     highScoreList.style.visibility = "hidden";
+    highScoreHeaderEl.style.visibility = "hidden";
     var storedScores = JSON.parse(localStorage.getItem("scores"));
 
     if (storedScores !== null){
@@ -71,14 +78,13 @@ function startTimer() {
  scoreEl.textContent = score;
  quizEl.textContent = "Click the button to start the quiz!";
 
-// Starts the quiz and hides the start button
+// Starts the quiz, resets values, and hides the start button and high score section elements if those were visible
 function startQuiz() {
     startButtonEl.disabled = true;
     startButtonEl.style.display = "none";
-    //scoresEl.style.visibility = "hidden";
-    highScoreList.style.visibility="hidden";
-    clearScoreButton.style.visibility="hidden";
-    returnToQuizButton.style.visibility="hidden";
+    highScoreList.style.display="none";
+    clearScoreButton.style.display="none";
+    returnToQuizButton.style.display="none";
     quizEl.style.visibility = "visible";
     currentQuestion = 0;
     score = 0;
@@ -96,15 +102,15 @@ function renderQuestions(){
         for (var j = 0; j < questions[i].choices.length; j++){
             var answerButton = document.createElement('button');
             answerButton.getAttribute("class", "answer-button");
-             answerButton.innerText = questions[i].choices[j];
-             answerButton.setAttribute("value", j);
-             answerButton.classList.add("button");
-             quizEl.append(answerButton);
-             answerButton.style.display = "block";
+            answerButton.innerText = questions[i].choices[j];
+            answerButton.setAttribute("value", j);
+            answerButton.classList.add("button");
+            quizEl.append(answerButton);
+            answerButton.style.display = "block";
             var userAnswer = '';
-             answerButton.addEventListener("click", checkAnswer);
-             answerButton.addEventListener("click", nextQuestion)
-             };
+            answerButton.addEventListener("click", checkAnswer);
+            answerButton.addEventListener("click", nextQuestion)
+            };
         };
     
 
@@ -168,6 +174,7 @@ function resetQuiz() {
 function listHighScores(event){
     quizEl.style.visibility = "hidden";
     startButtonEl.style.visibility = "hidden";
+    highScoreHeaderEl.style.visibility = "visible";
     highScoreList.style.visibility = "visible";
     scoresButtonEl.disabled = true;
     for (var k = 0; k < scores.length; k++){
@@ -179,12 +186,10 @@ function listHighScores(event){
         console.log(scores[k]);
         console.log(scoreItem);
     }
-    //var clearScoreButton = document.createElement("button");
     clearScoreButton.classList.add("button");
     clearScoreButton.textContent = "Clear scores";
     highScoreList.append(clearScoreButton);
     clearScoreButton.addEventListener("click", clearScoreList)
-    //var returnToQuizButton = document.createElement("button");
     returnToQuizButton.classList.add("button");
     returnToQuizButton.textContent = "Dismiss high scores & take quiz again";
     highScoreList.append(returnToQuizButton);
