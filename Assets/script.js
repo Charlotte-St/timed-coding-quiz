@@ -36,6 +36,8 @@ var overEl = document.querySelector(".quiz-over");
 var scoresButtonEl = document.querySelector(".view-scores");
 var scoresEl = document.querySelector(".high-scores");
 var highScoreList = document.querySelector(".high-score-list");
+var clearScoreButton = document.createElement("button");
+var returnToQuizButton = document.createElement("button");
 
 //init()
 
@@ -73,7 +75,10 @@ function startTimer() {
 function startQuiz() {
     startButtonEl.disabled = true;
     startButtonEl.style.display = "none";
-    highScoreList.visibility = "hidden";
+    //scoresEl.style.visibility = "hidden";
+    highScoreList.style.visibility="hidden";
+    clearScoreButton.style.visibility="hidden";
+    returnToQuizButton.style.visibility="hidden";
     quizEl.style.visibility = "visible";
     currentQuestion = 0;
     score = 0;
@@ -174,16 +179,16 @@ function listHighScores(event){
         console.log(scores[k]);
         console.log(scoreItem);
     }
-    var returnToQuizButton = document.createElement("button");
-    returnToQuizButton.classList.add("button");
-    returnToQuizButton.textContent = "Dismiss high scores & take quiz again";
-    highScoreList.append(returnToQuizButton);
-    returnToQuizButton("click", startQuiz);
-    var clearScoreButton = document.createElement("button");
+    //var clearScoreButton = document.createElement("button");
     clearScoreButton.classList.add("button");
     clearScoreButton.textContent = "Clear scores";
     highScoreList.append(clearScoreButton);
     clearScoreButton.addEventListener("click", clearScoreList)
+    //var returnToQuizButton = document.createElement("button");
+    returnToQuizButton.classList.add("button");
+    returnToQuizButton.textContent = "Dismiss high scores & take quiz again";
+    highScoreList.append(returnToQuizButton);
+    returnToQuizButton.addEventListener("click", startQuiz);
 };
 
 function clearScoreList(event) {
@@ -195,7 +200,3 @@ function clearScoreList(event) {
 init();
 scoresButtonEl.addEventListener("click", listHighScores);
 startButtonEl.addEventListener("click", startQuiz);
-
-
-// Sort scores so highest score appears at the top
-// Add link to reset high scores
