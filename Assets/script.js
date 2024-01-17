@@ -117,7 +117,6 @@ function renderQuestions(){
 //Checks answers when the user clicks an answer button
 function checkAnswer(event){
     userAnswer = event.target.value;
-    console.log(userAnswer);
     if (userAnswer === questions[i].answer){
         quizEl.append("Correct!");
         score = score + 10;
@@ -183,15 +182,13 @@ function listHighScores(event){
         highScore.textContent = scoreItem;
         highScore.setAttribute("data-index", k);
         highScoreList.append(highScore);
-        console.log(scores[k]);
-        console.log(scoreItem);
     }
     clearScoreButton.classList.add("button");
     clearScoreButton.textContent = "Clear scores";
     highScoreList.append(clearScoreButton);
     clearScoreButton.addEventListener("click", clearScoreList)
     returnToQuizButton.classList.add("button");
-    returnToQuizButton.textContent = "Dismiss high scores & take quiz again";
+    returnToQuizButton.textContent = "Dismiss saved scores & take quiz again";
     highScoreList.append(returnToQuizButton);
     returnToQuizButton.addEventListener("click", startQuiz);
 };
