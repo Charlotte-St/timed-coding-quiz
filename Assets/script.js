@@ -146,7 +146,7 @@ function endQuiz() {
     quizEl.append(initials);
     var saveScore = document.createElement("button");
     saveScore.classList.add("button");
-    saveScore.innerText = "Save Score";
+    saveScore.innerText = "Save score";
     quizEl.append(saveScore);
     saveScore.addEventListener("click", function(event){
         event.preventDefault();
